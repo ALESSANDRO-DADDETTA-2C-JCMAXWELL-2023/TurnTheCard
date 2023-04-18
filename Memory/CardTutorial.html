@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gioco del memory</title>
+
+    <style>
+        img {
+            width: 200px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div id="tavoloDaGioco"></div>
+    <div class="container">
+        <span class="counter">Punti =</span><span id="counter" class="counter">0</span>
+    </div>
+
+    <script>
+        // array contenente tutte le immagini frontali delle carte
+        carte = ["pokemon card front.jpg", "pokemon card front.jpg", "seconda pokemon card front.jpg", "seconda pokemon card front.jpg", "terza pokemon card front.jpg", "terza pokemon card front.jpg"]
+        // Variabili
+        let NcarteGirate = 0;
+        let primaCartaGirata = null
+        tavolo = document.querySelector('#tavoloDaGioco')
+        var counter = document.getElementById("counter");
+        var count = 0;
+        //questo codice inserisce le carte dentro il div creato in precedenza
+        carte.forEach(element => {
+            tavolo.innerHTML += '<img id="' + element + '" src="pokemon-card-back.jpg" onclick="gira(this)" />'
+            console.log('<img id="' + element + '" src="pokemon-card-back.jpg" />')
+        });
+
+        //funzione che ci permette di girare le carte
+        function gira(carta) {
+            NcarteGirate++
+            console.log(NcarteGirate)
+            carta.src = carta.id
+            if (NcarteGirate == 1)
+                primaCartaGirata = carta
+            else {
+                NcarteGirate = 0
+                if (carta.src == primaCartaGirata.src) {
+                    count++;
+                    counter.textContent = count;
+                } else {
+                    setTimeout(function() {
+                        carta.src = "pokemon-card-back.jpg";
+                        primaCartaGirata.src = "pokemon-card-back.jpg";
+                    }, 2000);
+                }
+            }
+            counter.textContent = count;
+            if (count == 3) {
+            var p = document.createElement("p");
+            p.textContent = "Bravo ci sei riuscito";
+            document.body.appendChild(p);
+            }
+        }
+    </script>
+</body>
+
+</html>
